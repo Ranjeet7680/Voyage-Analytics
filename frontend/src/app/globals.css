@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --glass-bg: rgba(11, 16, 38, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --color-primary: #00D9FF;
+  --color-secondary: #7C3AED;
+  --color-bg: #0B1026;
+}
+
+:root {
+  --background: #0B1026;
+  --foreground: 210 40% 98%;
+  --primary: #00D9FF;
+  --secondary: #7C3AED;
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: var(--background);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-sora { font-family: 'Sora', sans-serif; }
+
+/* Glass utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-input {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+.glass-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animations */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.animate-scan { animation: scan 2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+}
+.animate-orbit { animation: orbit 3s linear infinite; }
+
+/* Neon Glow */
+.neon-glow {
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3), 0 0 40px rgba(0, 217, 255, 0.1), 0 0 80px rgba(124, 58, 237, 0.1);
+}
+
+/* Preserve 3D for tilt cards */
+.perspective-1000 { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0, 217, 255, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 217, 255, 0.5); }
+
+/* Selection */
+::selection { background: rgba(0, 217, 255, 0.3); color: white; }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
