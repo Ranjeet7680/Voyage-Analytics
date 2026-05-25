@@ -37,20 +37,20 @@ Voyage Analytics is an advanced AI-powered travel intelligence platform for pred
 
 ```text
 Voyage-Analytics/
-├── app.py
-├── train_model.py
-├── model.pkl
-├── requirements.txt
-├── travel_capstone dataset/
-│   ├── flights.csv
-│   ├── hotels.csv
-│   └── users.csv
-└── frontend/
-    ├── package.json
-    ├── src/
-    │   ├── app/
-    │   └── components/
-    └── public/
+|-- app.py
+|-- train_model.py
+|-- model.pkl
+|-- requirements.txt
+|-- travel_capstone dataset/
+|   |-- flights.csv
+|   |-- hotels.csv
+|   `-- users.csv
+`-- frontend/
+    |-- package.json
+    |-- src/
+    |   |-- app/
+    |   `-- components/
+    `-- public/
 ```
 
 ## Getting Started

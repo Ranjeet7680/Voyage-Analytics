@@ -7,27 +7,33 @@ import {
   AlertTriangle,
   ArrowRight,
   Bell,
+  BedDouble,
   Bot,
-  Building2,
   CalendarDays,
   CheckCircle2,
   ChevronDown,
   CloudSun,
   Cpu,
   Download,
+  Filter,
+  Gauge,
   Globe2,
   Headphones,
   Hotel,
   IndianRupee,
+  Layers3,
   Mail,
+  MapPinned,
   MapPin,
   Mic,
+  Palette,
   Plane,
   Radar,
   Route,
   Search,
   Send,
   ShieldAlert,
+  SlidersHorizontal,
   Sparkles,
   Star,
   TrendingUp,
@@ -68,13 +74,81 @@ const airports = [
   { code: "BLR", city: "Bengaluru", load: 86, delay: "Med" },
   { code: "GOI", city: "Goa", load: 79, delay: "Low" },
   { code: "HYD", city: "Hyderabad", load: 74, delay: "Low" },
+  { code: "MAA", city: "Chennai", load: 81, delay: "Med" },
+  { code: "CCU", city: "Kolkata", load: 72, delay: "Low" },
+  { code: "COK", city: "Kochi", load: 77, delay: "Low" },
+  { code: "JAI", city: "Jaipur", load: 69, delay: "Low" },
+  { code: "IXC", city: "Chandigarh", load: 66, delay: "Low" },
 ];
 
 const hotels = [
   { name: "Azure Bay Resort", city: "Goa", price: 4200, rating: 4.8, match: 96, tag: "Beach + breakfast" },
   { name: "MetroSky Business", city: "Mumbai", price: 5100, rating: 4.6, match: 91, tag: "Airport transfer" },
   { name: "Hillview Retreat", city: "Manali", price: 3300, rating: 4.7, match: 89, tag: "Couple friendly" },
+  { name: "Amber Fort Suites", city: "Jaipur", price: 3900, rating: 4.5, match: 88, tag: "Heritage walk" },
+  { name: "Backwater Haven", city: "Kochi", price: 4600, rating: 4.9, match: 94, tag: "Houseboat pickup" },
+  { name: "Cloudline Lodge", city: "Shimla", price: 3100, rating: 4.4, match: 86, tag: "Mountain view" },
+  { name: "Marina Prime", city: "Chennai", price: 4400, rating: 4.6, match: 90, tag: "Business desk" },
+  { name: "Nizam Pearl Hotel", city: "Hyderabad", price: 3700, rating: 4.5, match: 87, tag: "Food trail" },
+  { name: "Park Street Grand", city: "Kolkata", price: 3500, rating: 4.4, match: 85, tag: "Cultural access" },
+  { name: "Lakefront Orchid", city: "Udaipur", price: 6200, rating: 4.9, match: 95, tag: "Lake view" },
+  { name: "CyberHub Stay", city: "Gurugram", price: 4800, rating: 4.6, match: 89, tag: "Work lounge" },
+  { name: "Coorg Mist Estate", city: "Coorg", price: 4100, rating: 4.7, match: 92, tag: "Nature retreat" },
 ];
+
+const themePalettes = [
+  { name: "Aqua", accent: "#67e8f9", soft: "rgba(103,232,249,.18)", glow: "rgba(103,232,249,.28)" },
+  { name: "Lime", accent: "#bef264", soft: "rgba(190,242,100,.18)", glow: "rgba(190,242,100,.24)" },
+  { name: "Coral", accent: "#fb7185", soft: "rgba(251,113,133,.18)", glow: "rgba(251,113,133,.25)" },
+  { name: "Gold", accent: "#fbbf24", soft: "rgba(251,191,36,.18)", glow: "rgba(251,191,36,.24)" },
+  { name: "Violet", accent: "#a78bfa", soft: "rgba(167,139,250,.18)", glow: "rgba(167,139,250,.25)" },
+];
+
+const locations = [
+  { city: "Delhi", code: "DEL", mood: "Culture + metro", demand: 94, budget: "INR 12K" },
+  { city: "Mumbai", code: "BOM", mood: "Business + sea", demand: 91, budget: "INR 15K" },
+  { city: "Bengaluru", code: "BLR", mood: "Tech + cafes", demand: 86, budget: "INR 13K" },
+  { city: "Goa", code: "GOI", mood: "Beach + nightlife", demand: 79, budget: "INR 14K" },
+  { city: "Hyderabad", code: "HYD", mood: "Food + heritage", demand: 74, budget: "INR 11K" },
+  { city: "Jaipur", code: "JAI", mood: "Fort + markets", demand: 69, budget: "INR 10K" },
+  { city: "Kochi", code: "COK", mood: "Backwater + art", demand: 77, budget: "INR 13K" },
+  { city: "Chennai", code: "MAA", mood: "Marina + temples", demand: 81, budget: "INR 12K" },
+  { city: "Kolkata", code: "CCU", mood: "Culture + sweets", demand: 72, budget: "INR 10K" },
+  { city: "Udaipur", code: "UDR", mood: "Lakes + palaces", demand: 68, budget: "INR 16K" },
+  { city: "Shimla", code: "SLV", mood: "Hills + cafes", demand: 63, budget: "INR 9K" },
+  { city: "Coorg", code: "CNN", mood: "Coffee + forests", demand: 61, budget: "INR 12K" },
+];
+
+const featureCategories = [
+  "AI Planning",
+  "Flights",
+  "Hotels",
+  "Budget",
+  "Safety",
+  "Collaboration",
+  "Automation",
+  "Analytics",
+] as const;
+
+const advancedFeatures = Array.from({ length: 120 }, (_, index) => {
+  const category = featureCategories[index % featureCategories.length];
+  const names = {
+    "AI Planning": ["Intent parser", "Smart itinerary", "Trip memory", "Local activity scorer", "Packing assistant"],
+    Flights: ["Fare watcher", "Delay predictor", "Seat recommender", "Layover optimizer", "Airline policy scan"],
+    Hotels: ["Stay matcher", "Amenity filter", "Late check-in finder", "Review summarizer", "Room value ranker"],
+    Budget: ["Daily spend guard", "Split-cost planner", "Currency snapshot", "Refund tracker", "Deal confidence"],
+    Safety: ["Emergency mode", "Weather risk", "Area alerts", "Document vault", "Medical contact card"],
+    Collaboration: ["Shared trip board", "Vote on stays", "Group budget", "Approval flow", "Email summary"],
+    Automation: ["Price-drop alert", "Calendar sync", "PDF export", "Reminder engine", "Auto replan"],
+    Analytics: ["Demand heatmap", "Route score", "Cancellation trend", "Model confidence", "Seasonality chart"],
+  } satisfies Record<(typeof featureCategories)[number], string[]>;
+  return {
+    id: index + 1,
+    category,
+    name: `${names[category][Math.floor(index / featureCategories.length) % 5]} ${index + 1}`,
+    status: index % 4 === 0 ? "Live" : index % 4 === 1 ? "AI" : index % 4 === 2 ? "Auto" : "Pro",
+  };
+});
 
 const team = [
   { name: "Ranjeet Kumar", role: "ML Engineer", skills: ["Python", "Flask", "Pricing AI"] },
@@ -220,6 +294,7 @@ export default function VoyageAnalytics() {
   const [from, setFrom] = useState("Delhi");
   const [to, setTo] = useState("Goa");
   const [tripClass, setTripClass] = useState("Economy");
+  const [theme, setTheme] = useState(themePalettes[0]);
   const [prediction, setPrediction] = useState<null | { fare: number; confidence: number; best: string }>(null);
   const [chatOpen, setChatOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState(0);
@@ -239,9 +314,16 @@ export default function VoyageAnalytics() {
   if (loading) return <Loader />;
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#07111f] text-white">
-      <div className="fixed inset-0 -z-10 bg-[linear-gradient(180deg,#07111f_0%,#0b1728_42%,#111827_100%)]" />
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(45,212,191,.18),transparent_32%),linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:auto,64px_64px,64px_64px]" />
+    <main
+      className="min-h-screen overflow-hidden bg-[#07111f] text-white"
+      style={{
+        "--accent": theme.accent,
+        "--accent-soft": theme.soft,
+        "--accent-glow": theme.glow,
+      } as React.CSSProperties}
+    >
+      <div className="fixed inset-0 -z-10 bg-[linear-gradient(180deg,#07111f_0%,#111827_42%,#18181b_100%)]" />
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,var(--accent-soft),transparent_32%),linear-gradient(rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:auto,64px_64px,64px_64px]" />
 
       <nav className="fixed left-0 right-0 top-0 z-40 border-b border-white/10 bg-slate-950/55 backdrop-blur-2xl">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
@@ -250,9 +332,9 @@ export default function VoyageAnalytics() {
             <span className="text-lg font-black">Voyage <span className="text-cyan-200">Analytics</span></span>
           </a>
           <div className="hidden items-center gap-1 md:flex">
-            {["Predictor", "Hotels", "Dashboard", "Emergency", "Team"].map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="rounded-full px-4 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white">{item}</a>)}
+            {["Predictor", "Locations", "Hotels", "Advanced", "Dashboard", "Emergency", "Team"].map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="rounded-full px-3 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white">{item}</a>)}
           </div>
-          <button onClick={() => setChatOpen(true)} className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-2.5 text-sm font-bold text-slate-950"><Sparkles className="h-4 w-4" /> AI Plan</button>
+          <button onClick={() => setChatOpen(true)} className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-bold text-slate-950"><Sparkles className="h-4 w-4" /> AI Plan</button>
         </div>
       </nav>
 
@@ -268,9 +350,10 @@ export default function VoyageAnalytics() {
             A SaaS-grade command center for fare prediction, hotel intelligence, delay risk, route analytics, emergency recovery, saved trips, and shareable itineraries.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <a href="#predictor" className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-6 py-3 font-bold text-slate-950 shadow-[0_0_34px_rgba(103,232,249,.28)]">Run prediction <ArrowRight className="h-4 w-4" /></a>
+            <a href="#predictor" className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 font-bold text-slate-950 shadow-[0_0_34px_var(--accent-glow)]">Run prediction <ArrowRight className="h-4 w-4" /></a>
             <button onClick={() => setChatOpen(true)} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 font-bold text-white"><Bot className="h-4 w-4" /> Ask AI planner</button>
           </div>
+          <ThemeSwitcher theme={theme} setTheme={setTheme} />
           <div className="mt-10 grid grid-cols-3 gap-3">
             {[["92%", "model confidence"], ["18K+", "routes analyzed"], ["4.8", "user rating"]].map(([v, l]) => <div key={l} className="rounded-2xl border border-white/10 bg-white/[.045] p-4"><p className="text-2xl font-black text-cyan-100">{v}</p><p className="text-xs uppercase tracking-widest text-slate-400">{l}</p></div>)}
           </div>
@@ -290,8 +373,8 @@ export default function VoyageAnalytics() {
             <div className="mb-6 flex items-center gap-3"><Search className="h-6 w-6 text-cyan-200" /><div><h2 className="text-3xl font-black">Flight Prediction Engine</h2><p className="text-slate-400">Fare, confidence, booking window, and delay risk in one flow.</p></div></div>
             <div className="grid gap-4 md:grid-cols-4">
               {[
-                ["From", from, setFrom, ["Delhi", "Mumbai", "Bengaluru", "Hyderabad"]],
-                ["To", to, setTo, ["Goa", "Jaipur", "Kochi", "Manali"]],
+                ["From", from, setFrom, locations.map((location) => location.city)],
+                ["To", to, setTo, locations.map((location) => location.city)],
                 ["Class", tripClass, setTripClass, ["Economy", "Premium", "Business"]],
               ].map(([label, value, setter, opts]) => (
                 <label key={label as string} className="block">
@@ -319,12 +402,34 @@ export default function VoyageAnalytics() {
         </div>
       </section>
 
-      <section id="hotels" className="mx-auto max-w-7xl px-5 py-16">
-        <SectionTitle icon={Hotel} eyebrow="Hotel Recommendation AI" title="Smart stays sorted by price, rating, and intent" />
-        <div className="grid gap-5 md:grid-cols-3">
-          {hotels.map((h) => <motion.div key={h.name} whileHover={{ y: -6 }} className="rounded-3xl border border-white/10 bg-white/[.045] p-5"><div className="mb-5 grid h-32 place-items-center rounded-2xl bg-[linear-gradient(135deg,rgba(103,232,249,.18),rgba(16,185,129,.12))]"><Building2 className="h-14 w-14 text-cyan-100" /></div><h3 className="text-xl font-black">{h.name}</h3><p className="text-slate-400">{h.city} - {h.tag}</p><div className="mt-5 flex items-center justify-between"><span className="text-2xl font-black text-cyan-100">INR {h.price}</span><span className="flex items-center gap-1 text-amber-200"><Star className="h-4 w-4 fill-current" /> {h.rating}</span></div><p className="mt-3 text-sm text-emerald-200">{h.match}% AI match</p></motion.div>)}
+      <section id="locations" className="mx-auto max-w-7xl px-5 py-16">
+        <SectionTitle icon={MapPinned} eyebrow="Expanded Location Intelligence" title="More routes, city moods, budgets, and demand signals" />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {locations.map((location) => (
+            <motion.div key={location.code} whileHover={{ y: -5 }} className="rounded-3xl border border-white/10 bg-white/[.045] p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]"><MapPin className="h-5 w-5" /></span>
+                <b className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">{location.code}</b>
+              </div>
+              <h3 className="text-xl font-black">{location.city}</h3>
+              <p className="mt-1 text-sm text-slate-400">{location.mood}</p>
+              <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                <span className="rounded-2xl border border-white/10 bg-slate-950/45 p-3"><b className="block text-[var(--accent)]">{location.demand}%</b>Demand</span>
+                <span className="rounded-2xl border border-white/10 bg-slate-950/45 p-3"><b className="block text-emerald-200">{location.budget}</b>Avg plan</span>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
+
+      <section id="hotels" className="mx-auto max-w-7xl px-5 py-16">
+        <SectionTitle icon={Hotel} eyebrow="Hotel Recommendation AI" title="Smart stays sorted by price, rating, and intent" />
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {hotels.map((h) => <motion.div key={h.name} whileHover={{ y: -6 }} className="rounded-3xl border border-white/10 bg-white/[.045] p-5"><div className="mb-5 grid h-32 place-items-center rounded-2xl bg-[linear-gradient(135deg,var(--accent-soft),rgba(16,185,129,.12))]"><BedDouble className="h-14 w-14 text-[var(--accent)]" /></div><h3 className="text-xl font-black">{h.name}</h3><p className="text-slate-400">{h.city} - {h.tag}</p><div className="mt-5 flex items-center justify-between"><span className="text-2xl font-black text-[var(--accent)]">INR {h.price}</span><span className="flex items-center gap-1 text-amber-200"><Star className="h-4 w-4 fill-current" /> {h.rating}</span></div><p className="mt-3 text-sm text-emerald-200">{h.match}% AI match</p></motion.div>)}
+        </div>
+      </section>
+
+      <AdvancedModePanel />
 
       <section id="dashboard" className="mx-auto max-w-7xl px-5 py-16">
         <SectionTitle icon={TrendingUp} eyebrow="Analytics Dashboard" title="Demand, fares, cancellations, heatmaps" />
@@ -394,4 +499,90 @@ function ChartPanel({ title, children }: { title: string; children: React.ReactN
 
 function Feature({ icon: Icon, title, text }: { icon: typeof Plane; title: string; text: string }) {
   return <div className="rounded-3xl border border-white/10 bg-white/[.045] p-5"><Icon className="mb-4 h-7 w-7 text-cyan-100" /><h3 className="font-black">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{text}</p></div>;
+}
+
+function ThemeSwitcher({ theme, setTheme }: { theme: typeof themePalettes[number]; setTheme: (theme: typeof themePalettes[number]) => void }) {
+  return (
+    <div className="mt-8 flex flex-wrap items-center gap-3 rounded-3xl border border-white/10 bg-white/[.045] p-3">
+      <span className="inline-flex items-center gap-2 px-2 text-sm font-bold text-slate-200"><Palette className="h-4 w-4 text-[var(--accent)]" /> Theme colour</span>
+      {themePalettes.map((palette) => (
+        <button
+          key={palette.name}
+          onClick={() => setTheme(palette)}
+          className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm transition ${theme.name === palette.name ? "border-white/40 bg-white/15 text-white" : "border-white/10 text-slate-300 hover:bg-white/10"}`}
+        >
+          <span className="h-4 w-4 rounded-full" style={{ background: palette.accent, boxShadow: `0 0 18px ${palette.glow}` }} />
+          {palette.name}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function AdvancedModePanel() {
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState<(typeof featureCategories)[number] | "All">("All");
+  const filtered = advancedFeatures.filter((feature) => {
+    const matchesCategory = category === "All" || feature.category === category;
+    const matchesQuery = `${feature.name} ${feature.category} ${feature.status}`.toLowerCase().includes(query.toLowerCase());
+    return matchesCategory && matchesQuery;
+  });
+
+  return (
+    <section id="advanced" className="mx-auto max-w-7xl px-5 py-16">
+      <SectionTitle icon={SlidersHorizontal} eyebrow="Advanced Mode" title="100+ feature control center for a full travel platform demo" />
+      <div className="grid gap-5 lg:grid-cols-[.75fr_1.25fr]">
+        <div className="rounded-3xl border border-white/10 bg-white/[.045] p-5">
+          <div className="mb-5 flex items-center gap-3">
+            <Gauge className="h-6 w-6 text-[var(--accent)]" />
+            <div>
+              <h3 className="text-2xl font-black">Mode: Advanced</h3>
+              <p className="text-sm text-slate-400">120 visible capabilities across AI, booking, safety, automation, and analytics.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {[["120", "features"], ["8", "modules"], ["24/7", "alerts"]].map(([value, label]) => (
+              <div key={label} className="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
+                <b className="block text-2xl text-[var(--accent)]">{value}</b>
+                <span className="text-xs uppercase tracking-widest text-slate-500">{label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 grid gap-3">
+            {["Live prediction APIs", "Saved trips and exports", "Emergency recovery workflows", "Group planning workspace"].map((item) => (
+              <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/45 p-3 text-sm text-slate-200">
+                <CheckCircle2 className="h-4 w-4 text-emerald-200" /> {item}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-white/[.045] p-5">
+          <div className="mb-5 grid gap-3 md:grid-cols-[1fr_auto]">
+            <label className="flex h-12 items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/55 px-4">
+              <Search className="h-4 w-4 text-slate-500" />
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search features..." className="min-w-0 flex-1 bg-transparent text-sm outline-none" />
+            </label>
+            <div className="flex items-center gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/55 p-1">
+              <Filter className="ml-2 h-4 w-4 shrink-0 text-slate-500" />
+              {(["All", ...featureCategories] as const).map((item) => (
+                <button key={item} onClick={() => setCategory(item)} className={`shrink-0 rounded-xl px-3 py-2 text-xs font-bold ${category === item ? "bg-[var(--accent)] text-slate-950" : "text-slate-300 hover:bg-white/10"}`}>{item}</button>
+              ))}
+            </div>
+          </div>
+          <div className="grid max-h-[520px] gap-3 overflow-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
+            {filtered.map((feature) => (
+              <div key={feature.id} className="rounded-2xl border border-white/10 bg-slate-950/45 p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <Layers3 className="h-4 w-4 text-[var(--accent)]" />
+                  <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">{feature.status}</span>
+                </div>
+                <h4 className="font-bold">{feature.name}</h4>
+                <p className="mt-1 text-xs text-slate-500">{feature.category}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
